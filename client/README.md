@@ -6,3 +6,4 @@
 
 1. Clone the repository
 2. CD to the client folder and run "npm install on the terminal"
+3. Run npm start for for the client to boot up

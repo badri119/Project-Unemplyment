@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
-  font-family: "Press Start 2P", system-ui;
+  font-family: -apple-system, BlinkMacSystemFont, "Asap", sans-serif;
+  /* "Press Start 2P", system-ui; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,7 +44,6 @@ code {
 .get-started {
   border-radius: 3px;
   border-style: solid;
-  border-color: black;
   padding: 15px;
   text-decoration: none;
   color: black;
@@ -48,6 +51,7 @@ code {
   transition: 0.3s;
   margin-top: 3em;
   font-family: inherit;
+  border: 1px solid black;
 }
 
 .get-started:hover {

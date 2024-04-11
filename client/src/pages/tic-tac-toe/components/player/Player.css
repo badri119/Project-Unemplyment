@@ -1,7 +1,8 @@
 .player input {
   font: inherit;
-  font-size: 0.7rem;
+  font-size: smaller;
   width: 10rem;
+  color: black;
   border: none;
   border-radius: 10px;
   border-color: red;
@@ -43,4 +44,6 @@ ol {
   padding: 0.5rem;
   border-radius: 4px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }

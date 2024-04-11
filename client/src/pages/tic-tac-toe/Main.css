@@ -8,6 +8,7 @@
   background-position: center;
   top: 0;
   right: 0;
+  font-family: "Press Start 2P", system-ui;
 }
 
 .header {
@@ -23,8 +24,8 @@
   justify-content: space-between;
   margin: 3rem auto;
   align-items: center;
-  padding-left: 15rem;
-  padding-right: 15rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
   margin-top: 100px;
 }
 
@@ -44,7 +45,7 @@
 }
 
 .game-container {
-  max-width: 40rem;
+  max-width: 50rem;
   padding-left: 2rem;
   padding-right: 2rem;
   border-radius: 6px;
@@ -66,22 +67,23 @@
 .players li {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 70%;
   border: 2px solid transparent;
 }
 
 .players.highlight-player li.active {
   border-color: #f6e35a;
   animation: pulse 2s infinite ease-in-out;
+  padding: 5px;
 }
 
 .players.highlight-player li.active .player-name,
 .players.highlight-player li.active .player-symbol {
   color: #f6e35a;
+  font-size: smaller;
 }
 
 .players button {
-  width: 3rem;
   border: 3px;
   border-color: 2px;
   background-color: #051937;
@@ -93,6 +95,7 @@
   text-align: center;
   justify-content: center;
   margin-left: 10px;
+  display: flex;
 }
 
 .players button:hover {

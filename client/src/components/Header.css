@@ -8,6 +8,7 @@
   font-weight: 500;
   justify-content: end;
   height: 3.33333rem;
+  align-items: center;
   left: 0px;
   padding: 0px;
   position: fixed;
@@ -31,6 +32,7 @@
 .a-link {
   text-decoration: none;
   color: white;
+  font-size: smaller;
 }
 
 .li-point {
