@@ -1,0 +1,100 @@
+.App {
+  height: 100vh;
+  background-image: url(/src/assets/background.png);
+  width: 100%;
+  position: absolute;
+  background-size: cover;
+  z-index: -1;
+  background-position: center;
+  top: 0;
+  right: 0;
+}
+
+.header {
+  color: aliceblue;
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 400;
+  font-style: normal;
+}
+.container {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  margin: 3rem auto;
+  align-items: center;
+  padding-left: 15rem;
+  padding-right: 15rem;
+  margin-top: 100px;
+}
+
+.log-container {
+  width: auto;
+  height: auto;
+  background-color: aliceblue;
+  border-radius: 10px;
+  color: black;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+}
+
+.text-player {
+  text-align: center;
+}
+
+.game-container {
+  max-width: 40rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 6px;
+  background: linear-gradient(#051937, #a8eb12);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.players {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.players li {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  border: 2px solid transparent;
+}
+
+.players.highlight-player li.active {
+  border-color: #f6e35a;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.players.highlight-player li.active .player-name,
+.players.highlight-player li.active .player-symbol {
+  color: #f6e35a;
+}
+
+.players button {
+  width: 3rem;
+  border: 3px;
+  border-color: 2px;
+  background-color: #051937;
+  color: #c3ba78;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+  text-align: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.players button:hover {
+  color: #f8ca31;
+}

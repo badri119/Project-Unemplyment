@@ -1,0 +1,41 @@
+.landing-container {
+  margin-top: 100px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4rem;
+  height: auto;
+}
+
+.landing-container h1 {
+  color: black;
+  font-size: 5em;
+  text-align: center;
+}
+
+.landing-container h3 {
+  font-size: 2em;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-content: center;
+}
+
+.get-started {
+  border-radius: 3px;
+  border-style: solid;
+  border-color: black;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+  font-size: 1.5em;
+  transition: 0.3s;
+}
+
+.get-started:hover {
+  background-color: black;
+  color: white;
+}
