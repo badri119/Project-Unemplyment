@@ -47,6 +47,7 @@ code {
   font-size: 1em;
   transition: 0.3s;
   margin-top: 3em;
+  font-family: inherit;
 }
 
 .get-started:hover {

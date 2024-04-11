@@ -23,6 +23,11 @@ const Header = () => {
       title: "Why and future updates",
       to: "/why",
     },
+    {
+      id:4,
+      title: "Login",
+      to:"/login"
+    }
   ];
 
   return (
