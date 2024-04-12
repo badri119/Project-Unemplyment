@@ -3,29 +3,30 @@ package main
 import (
 	"net/http"
 
+	"server/endpoints/login"
+
 	"github.com/gin-gonic/gin"
 )
 
-type login_info struct {
-	ID        string `json:"id"`
-	username  string `json:"username"`
-	firstname string `json:"firstname"`
-	lastname  string `json:"lastname"`
-	password  string `json:"password"`
-}
-
-var info = []login_info{
-	{ID: "1", username: "ajishkalia123@gmail.com", firstname: "John", lastname: " Coltrane", password: "12345"},
-	{ID: "2", username: "ajishkalia124@gmail.com", firstname: "John", lastname: " Coltrane", password: "12345"},
-	{ID: "3", username: "ajishkalia125@gmail.com", firstname: "John", lastname: " Coltrane", password: "12345"},
-}
-
-func getAlbums(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, info)
-}
-
 func main() {
 	router := gin.Default()
-	router.GET("/Login", getAlbums)
+	router.GET("/Login", func(c *gin.Context) {
+		firstname := c.DefaultQuery("username", "Guest")
+		lastname := c.Query("password")
+		if firstname == "" || lastname == "" {
+			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Please Enter Username and Password"})
+			return
+		}
+		users, err := login.LoginUser(firstname, lastname)
+		if len(users) == 0 {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Incorrect Username or Password"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, users)
+	})
 	router.Run("localhost:8080")
 }
