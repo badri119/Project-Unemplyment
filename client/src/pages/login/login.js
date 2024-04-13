@@ -15,23 +15,27 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     try {
-      event.preventDefault();
-
-      //API call from backend goes here
-      const action = axios.get("");
-      // console.log(action.payload);
-      setCookie("Token", action.payload.Token);
-      setCookie("UserId", action.payload.UserId);
-
-      // Check if the action contains an error
-      if (action.error) {
-        setError(action.payload); // Set error message received from backend
-      } else {
-        // If registration is successful, navigate to details page and setcookie:
-        // console.log(action.payload.token);
-
-        navigate("/topics"); //set route to whatever the login requires
-      }
+        event.preventDefault();
+        //API call from backend goes here
+        //   setCookie("Token", action.payload.Token);
+        //   setCookie("UserId", action.payload.UserId);
+      const action = axios.get("/Login",{"params":{"username":username,"password":pass}}).then(function(response){
+        if(response.data.error)
+        {
+            setError(response.data.error)// Set error message received from backend
+        }
+        else{
+            // If registration is successful, navigate to details page and setcookie:
+            setCookie("Token", response.data[0].auth_token);
+            setCookie("UserId",response.data[0].id);
+            setError("Login Successful Logged In user Id is: "+response.data[0].id);
+            // navigate("/topics"); //set route to whatever the login requires
+        }
+      }).catch(function(error){
+        // Handle other unexpected errors
+        console.error("Error during registration:", error);
+        setError("An unexpected error occurred");
+      });
     } catch (err) {
       // Handle other unexpected errors
       console.error("Error during registration:", err);

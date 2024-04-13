@@ -25,14 +25,14 @@ const Header = () => {
     },
     {
       id: 4,
-      title: "Login",
+      title: "Signin",
       to: "/login",
     },
-    {
-      id: 5,
-      title: "Signup",
-      to: "/signup",
-    },
+    // {
+    //   id: 5,
+    //   title: "Signup",
+    //   to: "/signup",
+    // },
   ];
 
   return (
