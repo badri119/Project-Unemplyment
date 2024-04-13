@@ -14,19 +14,19 @@ func main() {
 		firstname := c.DefaultQuery("username", "Guest")
 		lastname := c.Query("password")
 		if firstname == "" || lastname == "" {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Please Enter Username and Password"})
+			c.JSON(http.StatusOK, gin.H{"error": "Please Enter Username and Password"})
 			return
 		}
-		users, err := login.LoginUser(firstname, lastname)
-		if len(users) == 0 {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Incorrect Username or Password"})
-			return
-		}
+		user_data, err := login.LoginUser(firstname, lastname)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, users)
+		if len(user_data) == 0 {
+			c.JSON(http.StatusOK, gin.H{"error": "Incorrect Username or Password"})
+			return
+		}
+		c.JSON(http.StatusOK, user_data)
 	})
 	router.Run("localhost:8080")
 }

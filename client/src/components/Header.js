@@ -24,10 +24,15 @@ const Header = () => {
       to: "/why",
     },
     {
-      id:4,
-      title: "Login",
-      to:"/login"
-    }
+      id: 4,
+      title: "Signin",
+      to: "/login",
+    },
+    // {
+    //   id: 5,
+    //   title: "Signup",
+    //   to: "/signup",
+    // },
   ];
 
   return (
