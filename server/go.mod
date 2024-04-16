@@ -35,5 +35,6 @@ require (
 )
 
 replace server/endpoints/login => /endpoints/login
+replace server/endpoints/signup => /endpoints/signup
 
 replace server/db => /db
