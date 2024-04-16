@@ -19,7 +19,7 @@ const Login = () => {
         //API call from backend goes here
         //   setCookie("Token", action.payload.Token);
         //   setCookie("UserId", action.payload.UserId);
-      const action = axios.get("/Login",{"params":{"username":username,"password":pass}}).then(function(response){
+      const action = axios.get("/login",{"params":{"username":username,"password":pass}}).then(function(response){
         if(response.data.error)
         {
             setError(response.data.error)// Set error message received from backend

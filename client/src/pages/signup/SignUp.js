@@ -9,7 +9,8 @@ import axios from "axios";
 const SignUp = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [pass, setPass] = useState("");
   const [cpass, setConfirmPass] = useState("");
   const [error, setError] = useState(null);
@@ -36,7 +37,7 @@ const SignUp = () => {
         // If registration is successful, navigate to details page and setcookie:
         // console.log(action.payload.token);
 
-        navigate("/topics"); //set route to whatever the login requires
+        navigate("/login"); //set route to whatever the login requires
       }
     } catch (err) {
       // Handle other unexpected errors
@@ -75,10 +76,21 @@ const SignUp = () => {
                 size="30"
                 required
                 type="text"
-                label="Username"
+                label="First Name"
                 variant="outlined"
                 onChange={(event) => {
-                  setUsername(event.target.value);
+                  setFirstName(event.target.value);
+                }}
+              />
+              <TextField
+                InputLabelProps={{ required: false }}
+                size="30"
+                required
+                type="text"
+                label="Last Name"
+                variant="outlined"
+                onChange={(event) => {
+                  setLastName(event.target.value);
                 }}
               />
               <TextField
