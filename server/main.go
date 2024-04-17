@@ -31,6 +31,20 @@ func main() {
 		c.JSON(http.StatusOK, user_data)
 	})
 
+	router.GET("/logout", func(c *gin.Context) {
+		token := c.Query("token")
+		if token == "" {
+			c.JSON(http.StatusOK, gin.H{"error": "JWT Token is required"})
+			return
+		}
+		err := login.LogoutUser(token)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"success": "Logged out Succesfully"})
+	})
+
 	router.GET("/check/email", func(c *gin.Context) {
 		email := c.Query("email")
 		if email == "" {
@@ -123,7 +137,7 @@ func main() {
 			return
 		} else {
 			if number > 0 {
-				c.JSON(http.StatusAccepted, gin.H{"success": "This email already exists in the system"})
+				c.JSON(http.StatusAccepted, gin.H{"error": "This email already exists in the system"})
 				return
 			}
 		}

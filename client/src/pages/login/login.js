@@ -11,6 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const handleSubmit = async (event) => {
@@ -19,17 +20,22 @@ const Login = () => {
         //API call from backend goes here
         //   setCookie("Token", action.payload.Token);
         //   setCookie("UserId", action.payload.UserId);
-      const action = axios.get("/login",{"params":{"username":username,"password":pass}}).then(function(response){
+        const action = axios.get("/login",{"params":{"username":username,"password":pass}}).then(function(response){
         if(response.data.error)
         {
             setError(response.data.error)// Set error message received from backend
+            setSuccess("")
         }
         else{
             // If registration is successful, navigate to details page and setcookie:
             setCookie("Token", response.data[0].auth_token);
             setCookie("UserId",response.data[0].id);
-            setError("Login Successful Logged In user Id is: "+response.data[0].id);
-            // navigate("/topics"); //set route to whatever the login requires
+            setError("")
+            setSuccess("Login Successful!");
+            setTimeout(() => {
+              // Code to execute after half a second
+              navigate("/topics");
+            }, 500);
         }
       }).catch(function(error){
         // Handle other unexpected errors
@@ -63,6 +69,7 @@ const Login = () => {
                 type="text"
                 label="Username"
                 variant="outlined"
+                autoComplete="off"
                 onChange={(event) => {
                   setUsername(event.target.value);
                 }}
@@ -74,6 +81,7 @@ const Login = () => {
                 name="psw"
                 label="Password"
                 variant="outlined"
+                autoComplete="off"
                 onChange={(event) => {
                   setPass(event.target.value);
                 }}
@@ -86,6 +94,17 @@ const Login = () => {
                     className="absolute top-0 left-0 right-0 justify-center"
                   >
                     <p className=" font-bold">{error}</p>
+                  </Alert>
+                )}
+              </div>
+              <div className="relative mt-2">
+                {success && (
+                  <Alert
+                    severity="success"
+                    variant="filled"
+                    className="absolute top-0 left-0 right-0 justify-center"
+                  >
+                    <p className=" font-bold">{success}</p>
                   </Alert>
                 )}
               </div>
