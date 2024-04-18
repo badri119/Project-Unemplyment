@@ -16,23 +16,20 @@ const SignUp = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const checkEmailExists = (email) => {
-      // Code to execute after half a second
-      // Make API call when input value changes
-      const action = axios.get("/check/email",{"params":{"email":email}}).then(function(response){
-        if(response.data.error)
-        {
-          setError(response.data.error);
-        }
-        else
-        {
-          setError("");
-        }
-      }).catch(function(error){
-        // Handle other unexpected errors
-        console.error("Error during registration:", error);
-        setError("An unexpected error occurred");
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await axios.get("/check/email", {
+        params: { email: email },
       });
+      if (response.data.error) {
+        setError(response.data.error);
+      } else {
+        setError("");
+      }
+    } catch (error) {
+      console.error("Error during email check:", error);
+      setError("An unexpected error occurred");
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -42,38 +39,36 @@ const SignUp = () => {
         setError("Passwords do not match");
         return;
       }
-      //API call from backend goes here
-      const FormData  = {
+      // API call from backend goes here
+      const FormData = {
         email: email,
         firstname: firstname,
         lastname: lastname,
         pass: pass,
-        cpass: cpass
-      }
-      const action = axios.post("/signup",FormData, {headers: {
-            'Content-Type': 'multipart/form-data'
-        }}).then(function(response){
-        if(response.data.error)
-        {
-            setError(response.data.error)
-            setSuccess("")
+        cpass: cpass,
+      };
+      try {
+        const response = await axios.post("/signup", FormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (response.data.error) {
+          setError(response.data.error);
+          setSuccess("");
+        } else {
+          setSuccess("Registration Successful!");
+          setError("");
+          setTimeout(() => {
+            // Code to execute after half a second
+            navigate("/login");
+          }, 500);
         }
-        else
-        {
-            setSuccess("Registration Successful!");
-            setError("");
-            setTimeout(() => {
-              // Code to execute after half a second
-              navigate("/login");
-            }, 500);
-        }
-      }).catch(function(error){
-        // Handle other unexpected errors
+      } catch (error) {
         console.error("Error during registration:", error);
         setError("An unexpected error occurred");
-      });
+      }
     } catch (err) {
-      // Handle other unexpected errors
       console.error("Error during registration:", err);
       setError("An unexpected error occurred");
     }
@@ -101,11 +96,9 @@ const SignUp = () => {
                 label="Email"
                 variant="outlined"
                 autoComplete="off"
-                onBlur={
-                  (event) => {
-                    checkEmailExists(event.target.value);
-                  }
-                }
+                onBlur={(event) => {
+                  checkEmailExists(event.target.value);
+                }}
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}

@@ -16,35 +16,27 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     try {
-        event.preventDefault();
-        //API call from backend goes here
-        //   setCookie("Token", action.payload.Token);
-        //   setCookie("UserId", action.payload.UserId);
-        const action = axios.get("/login",{"params":{"username":username,"password":pass}}).then(function(response){
-        if(response.data.error)
-        {
-            setError(response.data.error)// Set error message received from backend
-            setSuccess("")
-        }
-        else{
-            // If registration is successful, navigate to details page and setcookie:
-            setCookie("Token", response.data[0].auth_token);
-            setCookie("UserId",response.data[0].id);
-            setError("")
-            setSuccess("Login Successful!");
-            setTimeout(() => {
-              // Code to execute after half a second
-              navigate("/topics");
-            }, 500);
-        }
-      }).catch(function(error){
-        // Handle other unexpected errors
-        console.error("Error during registration:", error);
-        setError("An unexpected error occurred");
+      event.preventDefault();
+
+      const response = await axios.get("/login", {
+        params: { username: username, password: pass },
       });
-    } catch (err) {
-      // Handle other unexpected errors
-      console.error("Error during registration:", err);
+
+      if (response.data.error) {
+        setError(response.data.error);
+        setSuccess("");
+      } else {
+        setCookie("Token", response.data[0].auth_token);
+        setCookie("UserId", response.data[0].id);
+        setError("");
+        setSuccess("Login Successful!");
+
+        setTimeout(() => {
+          navigate("/topics");
+        }, 500);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
       setError("An unexpected error occurred");
     }
   };
