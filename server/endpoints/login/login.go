@@ -52,6 +52,16 @@ func updateToken(id string, token string) error {
 	}
 }
 
+func LogoutUser(token string) error {
+	sqlStatement := `UPDATE users SET auth_token = NULL WHERE auth_token = $1;`
+	_, error := db.DB.Exec(sqlStatement, token)
+	if error != nil {
+		return error
+	} else {
+		return nil
+	}
+}
+
 func LoginUser(username string, password string) ([]login_info, error) {
 	rows, err := db.DB.Query("SELECT ID,COALESCE(auth_token,''),password FROM users where username=$1 LIMIT 1", username)
 	if err != nil {

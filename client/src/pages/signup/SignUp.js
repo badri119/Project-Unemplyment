@@ -14,7 +14,26 @@ const SignUp = () => {
   const [pass, setPass] = useState("");
   const [cpass, setConfirmPass] = useState("");
   const [error, setError] = useState(null);
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [success, setSuccess] = useState(null);
+
+  const checkEmailExists = (email) => {
+      // Code to execute after half a second
+      // Make API call when input value changes
+      const action = axios.get("/check/email",{"params":{"email":email}}).then(function(response){
+        if(response.data.error)
+        {
+          setError(response.data.error);
+        }
+        else
+        {
+          setError("");
+        }
+      }).catch(function(error){
+        // Handle other unexpected errors
+        console.error("Error during registration:", error);
+        setError("An unexpected error occurred");
+      });
+  };
 
   const handleSubmit = async (event) => {
     try {
@@ -23,22 +42,36 @@ const SignUp = () => {
         setError("Passwords do not match");
         return;
       }
-
       //API call from backend goes here
-      const action = axios.get("");
-      // console.log(action.payload);
-      setCookie("Token", action.payload.Token);
-      setCookie("UserId", action.payload.UserId);
-
-      // Check if the action contains an error
-      if (action.error) {
-        setError(action.payload); // Set error message received from backend
-      } else {
-        // If registration is successful, navigate to details page and setcookie:
-        // console.log(action.payload.token);
-
-        navigate("/login"); //set route to whatever the login requires
+      const FormData  = {
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        pass: pass,
+        cpass: cpass
       }
+      const action = axios.post("/signup",FormData, {headers: {
+            'Content-Type': 'multipart/form-data'
+        }}).then(function(response){
+        if(response.data.error)
+        {
+            setError(response.data.error)
+            setSuccess("")
+        }
+        else
+        {
+            setSuccess("Registration Successful!");
+            setError("");
+            setTimeout(() => {
+              // Code to execute after half a second
+              navigate("/login");
+            }, 500);
+        }
+      }).catch(function(error){
+        // Handle other unexpected errors
+        console.error("Error during registration:", error);
+        setError("An unexpected error occurred");
+      });
     } catch (err) {
       // Handle other unexpected errors
       console.error("Error during registration:", err);
@@ -67,6 +100,12 @@ const SignUp = () => {
                 pattern="[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+(\.[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?"
                 label="Email"
                 variant="outlined"
+                autoComplete="off"
+                onBlur={
+                  (event) => {
+                    checkEmailExists(event.target.value);
+                  }
+                }
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
@@ -77,6 +116,7 @@ const SignUp = () => {
                 required
                 type="text"
                 label="First Name"
+                autoComplete="off"
                 variant="outlined"
                 onChange={(event) => {
                   setFirstName(event.target.value);
@@ -88,6 +128,7 @@ const SignUp = () => {
                 required
                 type="text"
                 label="Last Name"
+                autoComplete="off"
                 variant="outlined"
                 onChange={(event) => {
                   setLastName(event.target.value);
@@ -98,6 +139,7 @@ const SignUp = () => {
                 required
                 type="password"
                 name="password"
+                autoComplete="off"
                 label="Password"
                 variant="outlined"
                 onChange={(event) => {
@@ -109,12 +151,24 @@ const SignUp = () => {
                 required
                 type="password"
                 name="repeatpassword"
+                autoComplete="off"
                 label="Retype Password"
                 variant="outlined"
                 onChange={(event) => {
                   setConfirmPass(event.target.value);
                 }}
               />
+              <div className="relative mt-2 ">
+                {success && (
+                  <Alert
+                    severity="success"
+                    variant="filled"
+                    className="absolute top-0 left-0 right-0 flex justify-center"
+                  >
+                    <p className="font-bold">{success}</p>
+                  </Alert>
+                )}
+              </div>
               <div className="relative mt-2 ">
                 {error && (
                   <Alert
