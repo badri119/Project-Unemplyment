@@ -6,6 +6,8 @@ import Login from "./pages/login/login";
 import SignUp from "./pages/signup/SignUp";
 import Header from "./components/Header";
 import { Routes, Route } from "react-router-dom";
+import Topics from "./pages/topics/Topics";
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   return (
@@ -13,10 +15,13 @@ const App = () => {
       <Header />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/tic-tac-toe" element={<Main />} />
         <Route path="/why" element={<Why />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/topics" element={<Topics />} />
+          <Route exact path="/tic-tac-toe" element={<Main />} />
+        </Route>
       </Routes>
     </div>
   );

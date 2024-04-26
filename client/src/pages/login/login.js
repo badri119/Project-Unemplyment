@@ -8,7 +8,7 @@ import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -19,7 +19,7 @@ const Login = () => {
       event.preventDefault();
 
       const response = await axios.get("/login", {
-        params: { username: username, password: pass },
+        params: { username: email, password: pass },
       });
 
       if (response.data.error) {
@@ -27,7 +27,6 @@ const Login = () => {
         setSuccess("");
       } else {
         setCookie("Token", response.data[0].auth_token);
-        setCookie("UserId", response.data[0].id);
         setError("");
         setSuccess("Login Successful!");
 
@@ -59,11 +58,11 @@ const Login = () => {
                 InputLabelProps={{ required: false }}
                 required
                 type="text"
-                label="Username"
+                label="Email"
                 variant="outlined"
                 autoComplete="off"
                 onChange={(event) => {
-                  setUsername(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <TextField

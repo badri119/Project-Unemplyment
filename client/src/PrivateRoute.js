@@ -5,11 +5,13 @@ import { useCookies } from "react-cookie";
 //get cookie and store in a variable called token or whatever you like
 
 const PrivateRoute = ({ component: component, ...rest }) => {
-  const token = cookie; // will be the cookies
+  const [cookies] = useCookies(["Token"]);
+  // console.log(cookies.Token);
+
   return (
     <div>
       {(() => {
-        if (token) {
+        if (cookies.Token !== "undefined") {
           return <Outlet />;
         } else {
           return <Navigate to="/" />;

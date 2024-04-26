@@ -15,7 +15,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Credentials", "true")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, user-agent")
 		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
 
 		if c.Request.Method == "OPTIONS" {
@@ -64,6 +64,8 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"success": "Logged out Succesfully"})
 	})
 
+
+	//API to check if email already exists
 	router.GET("/check/email", func(c *gin.Context) {
 		email := c.Query("email")
 		if email == "" {
@@ -156,7 +158,7 @@ func main() {
 			return
 		} else {
 			if number > 0 {
-				c.JSON(http.StatusAccepted, gin.H{"error": "This email already exists in the system"})
+				c.JSON(http.StatusAccepted, gin.H{"error": "This email already exists"})
 				return
 			}
 		}
@@ -170,5 +172,5 @@ func main() {
 			return
 		}
 	})
-	router.Run("localhost:8080")
+	router.Run("127.0.0.1:8080")
 }
