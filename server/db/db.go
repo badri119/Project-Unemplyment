@@ -14,7 +14,7 @@ func init() {
 	// Initialize database connection
 	var err error
 	// Ajish your DB name is unemp-proj and password is root <-------
-	DB, err = sql.Open("postgres", "user=postgres dbname=unemp-proj sslmode=disable password=root host=localhost")
+	DB, err = sql.Open("postgres", "user=postgres dbname=unemployment sslmode=disable password=admin host=localhost")
 	if err != nil {
 		fmt.Println("Error connecting to the database:", err)
 		os.Exit(1)
